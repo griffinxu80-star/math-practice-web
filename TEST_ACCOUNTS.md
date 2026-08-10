@@ -10,9 +10,8 @@
 - 密码: test123
 
 ## 访问地址
-https://web-2ennenn5i-griffin-zh.vercel.app
+https://web-n4udnan7d-griffin-zh.vercel.app
 
 ## 部署信息
 - Vercel: https://vercel.com/griffin-zh/web
-- 最新部署: https://web-2ennenn5i-griffin-zh.vercel.app
 
