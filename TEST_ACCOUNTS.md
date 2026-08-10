@@ -14,5 +14,5 @@ https://math-practice-griffin.vercel.app
 
 ## 部署信息
 - Vercel: https://vercel.com/griffin-zh/web
-- 最新部署: https://web-n4udnan7d-griffin-zh.vercel.app
+- 最新部署: https://web-nfo8ykrsc-griffin-zh.vercel.app
 
