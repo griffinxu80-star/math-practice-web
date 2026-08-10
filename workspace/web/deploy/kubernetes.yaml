@@ -1,0 +1,111 @@
+﻿# 腾讯云 TKE Kubernetes 部署配置
+---
+# Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: math-practice
+---
+# ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: math-practice-config
+  namespace: math-practice
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  JWT_EXPIRES_IN: "7d"
+---
+# Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: math-practice-secret
+  namespace: math-practice
+type: Opaque
+stringData:
+  JWT_SECRET: "your-jwt-secret-here"
+  DATABASE_URL: "postgresql://user:password@host:5432/math_practice"
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: math-practice
+  namespace: math-practice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: math-practice
+  template:
+    metadata:
+      labels:
+        app: math-practice
+    spec:
+      containers:
+      - name: math-practice
+        image: ccr.ccs.tencentyun.com/math-practice/web-server:latest
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: math-practice-config
+        - secretRef:
+            name: math-practice-secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: math-practice-service
+  namespace: math-practice
+spec:
+  selector:
+    app: math-practice
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: ClusterIP
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: math-practice-ingress
+  namespace: math-practice
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: math.practice.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: math-practice-service
+            port:
+              number: 80
