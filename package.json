@@ -9,15 +9,16 @@
     "typecheck": "vue-tsc -b"
   },
   "dependencies": {
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0",
+    "axios": "^1.6.7",
+    "dayjs": "^1.11.10",
     "pinia": "^2.1.7",
     "vant": "^4.8.3",
-    "axios": "^1.6.7",
-    "dayjs": "^1.11.10"
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "playwright": "^1.62.1",
     "typescript": "^5.3.3",
     "vite": "^5.1.6",
     "vue-tsc": "^2.0.6"
