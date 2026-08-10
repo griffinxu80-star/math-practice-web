@@ -22,5 +22,21 @@
     "typescript": "^5.3.3",
     "vite": "^5.1.6",
     "vue-tsc": "^2.0.6"
-  }
+  },
+  "main": "test.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/griffinxu80-star/math-practice-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/griffinxu80-star/math-practice-web/issues"
+  },
+  "homepage": "https://github.com/griffinxu80-star/math-practice-web#readme"
 }

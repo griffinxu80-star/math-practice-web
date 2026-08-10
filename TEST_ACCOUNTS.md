@@ -10,8 +10,9 @@
 - 密码: test123
 
 ## 访问地址
-https://web-n4udnan7d-griffin-zh.vercel.app
+https://math-practice-griffin.vercel.app
 
 ## 部署信息
 - Vercel: https://vercel.com/griffin-zh/web
+- 最新部署: https://web-n4udnan7d-griffin-zh.vercel.app
 
