@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Debug</title>
+</head>
+<body>
+<div id="debug"></div>
+<script>
+var errors = [];
+window.onerror = function(msg, url, line) {
+  errors.push(msg + ' at line ' + line);
+  document.getElementById('debug').innerHTML = '<h1>JavaScript Errors:</h1><ul>' + errors.map(function(e) { return '<li>' + e + '</li>'; }).join('') + '</ul>';
+  return false;
+};
+document.getElementById('debug').innerHTML = '<h1>Debug Page</h1><p>如果有错误，会显示在下面。</p>';
+</script>
+</body>
+</html>

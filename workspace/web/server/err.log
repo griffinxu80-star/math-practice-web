@@ -1,0 +1,17 @@
+E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\dist\services\auth.js:55
+    const userId = req.user.id;
+                            ^
+
+TypeError: Cannot read properties of undefined (reading 'id')
+    at getMe (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\dist\services\auth.js:55:29)
+    at Layer.handle [as handle_request] (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\route.js:119:3)
+    at Layer.handle [as handle_request] (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\layer.js:95:5)
+    at E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\index.js:284:15
+    at router.process_params (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\index.js:346:12)
+    at next (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\index.js:280:10)
+    at router.handle (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\index.js:175:3)
+    at router (E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\node_modules\express\lib\router\index.js:47:12)
+
+Node.js v24.18.0

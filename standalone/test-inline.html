@@ -1,0 +1,15 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>测试 - 内联JS</title>
+</head>
+<body>
+<div id="app"></div>
+<script>
+  // 内联JS测试 - 不依赖外部文件
+  document.getElementById('app').innerHTML = '<h1>内联JS测试</h1><p>这是内联JavaScript测试，不依赖外部文件。</p><p>当前时间: ' + new Date().toLocaleString('zh-CN') + '</p>';
+</script>
+</body>
+</html>

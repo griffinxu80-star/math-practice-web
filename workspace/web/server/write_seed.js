@@ -1,0 +1,34 @@
+const fs = require('fs');
+const code = `const { initDatabase, run, get, all, execMulti, seedShopItems, saveDatabase } = require("../../src/models/db");
+const { seedKnowledgePoints } = require("./knowledge");
+const { seedQuestions } = require("./questions");
+const fs = require("fs");
+const path = require("path");
+
+async function main() {
+  console.log("=== Init DB ===");
+  await initDatabase();
+  console.log("=== Run migrations ===");
+  const migrationDir = path.join(__dirname, "../migrations");
+  const files = fs.readdirSync(migrationDir).filter(function(f) { return f.endsWith(".sql"); }).sort();
+  for (var i = 0; i < files.length; i++) {
+    var sql = fs.readFileSync(path.join(migrationDir, files[i]), "utf8");
+    console.log("Running " + files[i] + "...");
+    await execMulti(sql);
+  }
+  console.log("=== Seed knowledge points ===");
+  const kpResult = await seedKnowledgePoints();
+  console.log("Seeded " + kpResult.inserted + " knowledge points");
+  console.log("=== Seed questions ===");
+  const qResult = await seedQuestions();
+  console.log("Seeded " + qResult.inserted + " questions");
+  console.log("=== Seed shop items ===");
+  await seedShopItems();
+  saveDatabase();
+  console.log("=== Done ===");
+}
+
+main().catch(console.error);
+`;
+fs.writeFileSync('./database/seed/index.js', code);
+console.log('Written index.js');

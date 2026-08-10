@@ -1,0 +1,1 @@
+var fs=require("fs");var p=require("path");var sql=require("sql.js");sql().then(function(SQL){var db=new SQL.Database(fs.readFileSync("./data/db.sqlite"));var t=db.exec("SELECT sql FROM sqlite_master WHERE type=\"table\"");console.log(t[0]?t[0].values.map(function(r){return r[0];}).join("\n---\n"):"none");});

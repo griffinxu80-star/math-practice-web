@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学数学自测辅导 - 调试版</title>
+</head>
+<body>
+<div id="debug"></div>
+<script>
+  window.onerror = function(msg, url, line, col, err) {
+    document.getElementById('debug').innerHTML = 
+      '<h1 style="color:red">JavaScript Error</h1>' +
+      '<p><strong>Message:</strong> ' + msg + '</p>' +
+      '<p><strong>URL:</strong> ' + url + '</p>' +
+      '<p><strong>Line:</strong> ' + line + ', Column: ' + col + '</p>' +
+      '<p><strong>Stack:</strong><pre>' + (err && err.stack ? err.stack : 'N/A') + '</pre></p>';
+    return false;
+  };
+  document.getElementById('debug').innerHTML = '<h1>Loading...</h1><p>If you see an error below, please report it.</p>';
+</script>
+<script src="js/store.js"></script>
+<script>document.getElementById('debug').innerHTML += '<p style="color:green">store.js loaded OK</p>';</script>
+<script src="js/seed.js"></script>
+<script>document.getElementById('debug').innerHTML += '<p style="color:green">seed.js loaded OK</p>';</script>
+<script src="js/app.js"></script>
+<script>document.getElementById('debug').innerHTML += '<p style="color:green">app.js loaded OK</p>';</script>
+<script src="js/pages.js"></script>
+<script>document.getElementById('debug').innerHTML += '<p style="color:green">pages.js loaded OK</p>';</script>
+<script src="js/router.js"></script>
+<script>document.getElementById('debug').innerHTML += '<p style="color:green">router.js loaded OK</p>';</script>
+<script src="js/exam.js"></script>
+<script>document.getElementById('debug').innerHTML += '<p style="color:green">exam.js loaded OK</p>';</script>
+<script src="js/handlers.js"></script>
+<script>document.getElementById('debug').innerHTML += '<p style="color:green">handlers.js loaded OK</p>';</script>
+<script>
+  App.init();
+  document.getElementById('debug').innerHTML += '<p style="color:green">App.init() called OK</p>';
+  Router.init();
+  document.getElementById('debug').innerHTML += '<p style="color:green">Router.init() called OK</p>';
+</script>
+</body>
+</html>

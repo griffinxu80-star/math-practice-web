@@ -1,0 +1,9 @@
+﻿
+> web-server@1.0.0 dev
+> tsx watch src/index.ts
+
+Loaded SQLite database from E:\360MoveData\Users\admin\Documents\小学数学自测及辅导\workspace\web\server\data\db.sqlite
+Database initialized
+Shop items seeded
+Server running on port 3000
+API available at http://localhost:3000/api/v1/health

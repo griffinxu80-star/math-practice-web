@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学数学自测辅导 - 独立版</title>
+<style>
+:root { --primary: #2F5496; --bg: #F5F7FA; --text: #333; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: sans-serif; background: var(--bg); color: var(--text); }
+#app { min-height: 100vh; padding: 20px; }
+h1 { color: var(--primary); margin-bottom: 20px; }
+</style>
+</head>
+<body>
+<div id="app">
+<h1>小学数学自测辅导 - 独立版</h1>
+<p>如果看到这个页面，说明服务器正常工作。</p>
+<p>当前时间: <span id="time"></span></p>
+</div>
+<script>
+document.getElementById('time').textContent = new Date().toLocaleString('zh-CN');
+</script>
+</body>
+</html>
