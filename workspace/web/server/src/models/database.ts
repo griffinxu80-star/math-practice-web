@@ -133,6 +133,52 @@ async function sqliteSeedShopItems() {
   }
 }
 
+
+function sqlitePrepare(sql) {
+  if (!sqlDb) throw new Error('SQLite not initialized');
+  return sqlDb.prepare(sql);
+}
+
+function sqliteTransaction(callback, points) {
+  if (!sqlDb) throw new Error('SQLite not initialized');
+  sqlDb.exec('BEGIN TRANSACTION;');
+  try {
+    const result = callback(points || []);
+    sqlDb.exec('COMMIT;');
+    return result;
+  } catch (e) {
+    sqlDb.exec('ROLLBACK;');
+    throw e;
+  }
+}
+
+function pgTransaction(callback, items) {
+  return pgClient.query('BEGIN')
+    .then(() => callback())
+    .then(r => pgClient.query('COMMIT').then(() => r))
+    .catch(e => pgClient.query('ROLLBACK').then(() => { throw e; }));
+}
+
+async function prepare(sql) {
+  if (DATABASE_URL) return pgPrepare(sql);
+  return sqlitePrepare(sql);
+}
+
+async function transaction(callback, items) {
+  if (DATABASE_URL) return pgTransaction(callback, items);
+  return sqliteTransaction(callback, items);
+}
+
+
+async function pgPrepare(sql) {
+  await initPostgres();
+  return {
+    run: async function(params = []) {
+      await pgClient.query(sql, params);
+    }
+  };
+}
+
 async function initDatabase() {
   if (DATABASE_URL) {
     await initPostgres();
@@ -175,4 +221,8 @@ async function closeDatabase() {
   saveDatabase();
 }
 
-export { initDatabase, run, get, all, execMulti, seedShopItems, saveDatabase, closeDatabase };
+
+async function transactionAll(callback) {
+  return async (items) => transaction(async (it) => callback(it), items);
+}
+export { initDatabase, run, get, all, execMulti, seedShopItems, saveDatabase, closeDatabase, prepare, transaction, transactionAll };

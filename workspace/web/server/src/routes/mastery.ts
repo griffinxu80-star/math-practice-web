@@ -1,8 +1,8 @@
-﻿import express from 'express';
+import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { getWeakPoints, getImprovedPoints, updateMastery } from '../services/mastery.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/weak', authenticate, async (req: any, res: any) => {
   const threshold = parseFloat(req.query.threshold as string) || 0.55;

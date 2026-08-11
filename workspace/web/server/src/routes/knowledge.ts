@@ -1,7 +1,7 @@
-import express from 'express';
+import { Router } from 'express';
 import { getKnowledgeTree, getKnowledgePoint, getQuestions, getRandomQuestions, getGeometryQuestions } from '../services/knowledge.js';
 
-const router = express.Router();
+const router = Router();
 
 // GET /api/v1/knowledge/tree
 router.get('/tree', async (req: any, res: any) => {

@@ -1,8 +1,8 @@
-﻿import express from 'express';
+import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { getWrongQuestions, markWrongQuestionMastered, addWrongQuestion } from '../services/wrongQuestion.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', authenticate, async (req: any, res: any) => {
   const mastered = req.query.mastered !== undefined ? req.query.mastered === '1' : undefined;

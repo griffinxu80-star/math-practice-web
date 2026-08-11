@@ -1,8 +1,8 @@
-﻿import express from 'express';
+import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { addPoints, spendPoints, getPointHistory, getCurrentPoints } from '../services/points.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/balance', authenticate, async (req: any, res: any) => {
   const balance = await getCurrentPoints(req.user.id);

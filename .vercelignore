@@ -1,0 +1,7 @@
+﻿workspace/web/server/node_modules
+workspace/web/server/data
+workspace/web/client/node_modules
+node_modules
+*.log
+.vercel
+dist

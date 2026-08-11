@@ -1,6 +1,11 @@
-node_modules
+﻿node_modules
 dist
 dist-ssr
 *.local
 .env
 .DS_Store
+workspace/web/server/check_*.js
+workspace/web/server/test_*.js
+workspace/web/server/data/
+workspace/web/server/database/seed/debug_q.*
+cypress/screenshots/

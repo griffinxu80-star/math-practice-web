@@ -1,4 +1,4 @@
-﻿import { run, get, all } from '../models/db.js';
+import { run, get, all } from '../models/db.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -16,7 +16,7 @@ export const register = async (req: any, res: any) => {
   const password_hash = await bcrypt.hash(password, 10);
   const id = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-  const now = "datetime('now')";
+  const now = "NOW()";
   await run('INSERT INTO users (id, username, password_hash, role, grade, name, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ' + now + ', ' + now + ')',
     [id, username, password_hash, role, grade, name || username]);
 
@@ -53,6 +53,7 @@ export const login = async (req: any, res: any) => {
 };
 
 export const getMe = async (req: any, res: any) => {
+  if (!req.user) return res.status(401).json({ success: false, message: 'Unauthorized' });
   const userId = req.user.id;
   const user = await get('SELECT id, username, role, grade, name, avatar_url, created_at FROM users WHERE id = ?', [userId]);
   let profile = null;
@@ -62,8 +63,8 @@ export const getMe = async (req: any, res: any) => {
 };
 
 export const updateProfile = async (req: any, res: any) => {
+  if (!req.user) return res.status(401).json({ success: false, message: 'Unauthorized' });
   const { name, avatar_url } = req.body;
-  await run("UPDATE users SET name = ?, avatar_url = ?, updated_at = datetime('now') WHERE id = ?", [name, avatar_url, req.user.id]);
+  await run("UPDATE users SET name = ?, avatar_url = ?, updated_at = NOW() WHERE id = ?", [name, avatar_url, req.user.id]);
   res.json({ success: true, message: 'Updated' });
 };
-

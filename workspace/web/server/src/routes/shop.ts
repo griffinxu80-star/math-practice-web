@@ -1,8 +1,8 @@
-﻿import express from 'express';
+import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { getShopItems, getShopItem, redeemItem, getRedemptions } from '../services/shop.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/items', async (req: any, res: any) => {
   const items = await getShopItems();

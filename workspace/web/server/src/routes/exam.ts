@@ -1,8 +1,8 @@
-﻿import express from 'express';
+import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { startExam, submitExam, getExamAttempt, getExamHistory, createExam } from '../services/exam.js';
 
-const router = express.Router();
+const router = Router();
 
 router.post('/create', authenticate, authorize('student', 'parent'), async (req: any, res: any) => {
   const result = await createExam(req.body);

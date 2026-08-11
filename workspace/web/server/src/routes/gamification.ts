@@ -1,8 +1,8 @@
-﻿import express from 'express';
+import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { addAchievement, getAchievements, checkAchievements } from '../services/achievement.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', authenticate, async (req: any, res: any) => {
   const achievements = await getAchievements(req.user.id);

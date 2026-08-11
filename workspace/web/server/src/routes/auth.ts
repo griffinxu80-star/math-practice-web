@@ -1,8 +1,8 @@
-import express from 'express';
+import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { register, login, getMe, updateProfile } from '../services/auth';
 
-const router = express.Router();
+const router = Router();
 
 router.post('/register', register);
 router.post('/login', login);

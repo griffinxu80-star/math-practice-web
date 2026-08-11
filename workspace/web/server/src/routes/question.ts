@@ -1,8 +1,8 @@
-﻿import express from 'express';
+import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { getQuestions, getRandomQuestions, getGeometryQuestions } from '../services/question.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/questions', async (req: any, res: any) => {
   const filters: any = {

@@ -1,8 +1,8 @@
-﻿import express from 'express';
+import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { getChildList, bindChild, unbindChild, getChildReport, getChildWrongQuestions, createGoal, getGoals, updateGoalStatus } from '../services/parent.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/children', authenticate, authorize('parent'), async (req: any, res: any) => {
   const children = await getChildList(req.user.id);

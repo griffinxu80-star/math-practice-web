@@ -1,36 +1,37 @@
-ï»¿import db from '../src/models/db';
+import { initDatabase, run, get, all, execMulti, seedShopItems, saveDatabase, closeDatabase, prepare, transaction, transactionAll } from '../../src/models/db';
 
 const sampleQuestions = [
-  // å››å¹´çº§ç¤ºä¾‹é¢˜ç›®
+  // ËÄÄê¼¶Ê¾ÀýÌâÄ¿
   { knowledgePointId: 'kp_sample', content: '356 + 478 = ?', type: 'calculation', correctAnswer: '834', difficulty: 0.3 },
-  { knowledgePointId: 'kp_sample', content: 'ä¸‹é¢å“ªä¸ªæ˜¯è´¨æ•°ï¼ŸA. 4 B. 9 C. 7 D. 15', type: 'choice', options: JSON.stringify(['A. 4', 'B. 9', 'C. 7', 'D. 15']), correctAnswer: 'C', difficulty: 0.4 },
-  { knowledgePointId: 'kp_sample', content: 'ä¸€ä¸ªç›´è§’ä¸‰è§’å½¢çš„ä¸¤ä¸ªé”è§’ä¹‹å’Œæ˜¯ï¼ˆï¼‰åº¦ã€‚', type: 'fill_blank', correctAnswer: '90', difficulty: 0.5 },
-  { knowledgePointId: 'kp_sample', content: 'æŠŠ12ä¸ªè‹¹æžœå¹³å‡åˆ†ç»™3ä¸ªå°æœ‹å‹ï¼Œæ¯äººåˆ†ï¼ˆï¼‰ä¸ªã€‚', type: 'fill_blank', correctAnswer: '4', difficulty: 0.3 },
-  { knowledgePointId: 'kp_sample', content: 'è®¡ç®—ï¼š25 Ã— 4 = ?', type: 'calculation', correctAnswer: '100', difficulty: 0.2 },
-  { knowledgePointId: 'kp_sample', content: 'ä¸‹é¢å“ªä¸ªæ•°æœ€æŽ¥è¿‘1000ï¼ŸA. 998 B. 1002 C. 995 D. 1005', type: 'choice', options: JSON.stringify(['A. 998', 'B. 1002', 'C. 995', 'D. 1005']), correctAnswer: 'A', difficulty: 0.5 },
-  // äº”å¹´çº§ç¤ºä¾‹é¢˜ç›®
-  { knowledgePointId: 'kp_sample', content: '0.5 Ã— 0.4 = ?', type: 'calculation', correctAnswer: '0.2', difficulty: 0.4 },
-  { knowledgePointId: 'kp_sample', content: 'ä¸€ä¸ªå¹³è¡Œå››è¾¹å½¢çš„åº•æ˜¯8cmï¼Œé«˜æ˜¯5cmï¼Œé¢ç§¯æ˜¯ï¼ˆï¼‰å¹³æ–¹åŽ˜ç±³ã€‚', type: 'fill_blank', correctAnswer: '40', difficulty: 0.5 },
-  { knowledgePointId: 'kp_sample', content: 'è§£æ–¹ç¨‹ï¼šx + 5 = 12ï¼Œx = ?', type: 'calculation', correctAnswer: '7', difficulty: 0.4 },
-  { knowledgePointId: 'kp_sample', content: '3.6 Ã· 0.9 = ?', type: 'calculation', correctAnswer: '4', difficulty: 0.5 },
-  // å…­å¹´çº§ç¤ºä¾‹é¢˜ç›®
+  { knowledgePointId: 'kp_sample', content: 'ÏÂÃæÄÄ¸öÊÇÖÊÊý£¿A. 4 B. 9 C. 7 D. 15', type: 'choice', options: JSON.stringify(['A. 4', 'B. 9', 'C. 7', 'D. 15']), correctAnswer: 'C', difficulty: 0.4 },
+  { knowledgePointId: 'kp_sample', content: 'Ò»¸öÖ±½ÇÈý½ÇÐÎµÄÁ½¸öÈñ½ÇÖ®ºÍÊÇ£¨£©¶È¡£', type: 'fill_blank', correctAnswer: '90', difficulty: 0.5 },
+  { knowledgePointId: 'kp_sample', content: '°Ñ12¸öÆ»¹ûÆ½¾ù·Ö¸ø3¸öÐ¡ÅóÓÑ£¬Ã¿ÈË·Ö£¨£©¸ö¡£', type: 'fill_blank', correctAnswer: '4', difficulty: 0.3 },
+  { knowledgePointId: 'kp_sample', content: '¼ÆËã£º25 ¡Á 4 = ?', type: 'calculation', correctAnswer: '100', difficulty: 0.2 },
+  { knowledgePointId: 'kp_sample', content: 'ÏÂÃæÄÄ¸öÊý×î½Ó½ü1000£¿A. 998 B. 1002 C. 995 D. 1005', type: 'choice', options: JSON.stringify(['A. 998', 'B. 1002', 'C. 995', 'D. 1005']), correctAnswer: 'A', difficulty: 0.5 },
+  // ÎåÄê¼¶Ê¾ÀýÌâÄ¿
+  { knowledgePointId: 'kp_sample', content: '0.5 ¡Á 0.4 = ?', type: 'calculation', correctAnswer: '0.2', difficulty: 0.4 },
+  { knowledgePointId: 'kp_sample', content: 'Ò»¸öÆ½ÐÐËÄ±ßÐÎµÄµ×ÊÇ8cm£¬¸ßÊÇ5cm£¬Ãæ»ýÊÇ£¨£©Æ½·½ÀåÃ×¡£', type: 'fill_blank', correctAnswer: '40', difficulty: 0.5 },
+  { knowledgePointId: 'kp_sample', content: '½â·½³Ì£ºx + 5 = 12£¬x = ?', type: 'calculation', correctAnswer: '7', difficulty: 0.4 },
+  { knowledgePointId: 'kp_sample', content: '3.6 ¡Â 0.9 = ?', type: 'calculation', correctAnswer: '4', difficulty: 0.5 },
+  // ÁùÄê¼¶Ê¾ÀýÌâÄ¿
   { knowledgePointId: 'kp_sample', content: '1/2 + 1/3 = ?', type: 'calculation', correctAnswer: '5/6', difficulty: 0.6 },
-  { knowledgePointId: 'kp_sample', content: 'ä¸€ä¸ªåœ†çš„åŠå¾„æ˜¯3cmï¼Œå‘¨é•¿æ˜¯ï¼ˆï¼‰cmã€‚ï¼ˆÏ€å–3.14ï¼‰', type: 'fill_blank', correctAnswer: '18.84', difficulty: 0.6 },
-  { knowledgePointId: 'kp_sample', content: '25%çš„400æ˜¯ï¼ˆï¼‰ã€‚', type: 'fill_blank', correctAnswer: '100', difficulty: 0.4 },
-  { knowledgePointId: 'kp_sample', content: 'ä¸€ä¸ªæ•°çš„3/4æ˜¯60ï¼Œè¿™ä¸ªæ•°æ˜¯ï¼ˆï¼‰ã€‚', type: 'fill_blank', correctAnswer: '80', difficulty: 0.7 },
+  { knowledgePointId: 'kp_sample', content: 'Ò»¸öÔ²µÄ°ë¾¶ÊÇ3cm£¬ÖÜ³¤ÊÇ£¨£©cm¡££¨¦ÐÈ¡3.14£©', type: 'fill_blank', correctAnswer: '18.84', difficulty: 0.6 },
+  { knowledgePointId: 'kp_sample', content: '25%µÄ400ÊÇ£¨£©¡£', type: 'fill_blank', correctAnswer: '100', difficulty: 0.4 },
+  { knowledgePointId: 'kp_sample', content: 'Ò»¸öÊýµÄ3/4ÊÇ60£¬Õâ¸öÊýÊÇ£¨£©¡£', type: 'fill_blank', correctAnswer: '80', difficulty: 0.7 },
 ];
 
 export async function seedQuestions() {
-  const stmt = db.prepare(`
+  const stmt = prepare(`
     INSERT INTO questions (id, knowledge_point_id, content, question_type, options, correct_answer, difficulty, source_type, source_name, created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, 'original', 'å®˜æ–¹å…¬å¼€èµ„æº', datetime('now'))
+    VALUES (?, ?, ?, ?, ?, ?, ?, 'original', '¹Ù·½¹«¿ª×ÊÔ´', NOW())
   `);
   
-  const batch = db.transaction((questions: any[]) => {
+  const batch = transactionAll((questions: any[]) => {
     let inserted = 0;
     for (const q of questions) {
       const id = `q_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      stmt.run(id, q.knowledgePointId, q.content, q.type, q.options || null, q.correctAnswer, q.difficulty);
+      console.log("q:", JSON.stringify(q), "kp:", q.knowledgePointId);
+      stmt.run([id, q.knowledgePointId, q.content, q.type, q.options || null, q.correctAnswer, q.difficulty]);
       inserted++;
     }
     return inserted;
